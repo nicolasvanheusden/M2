@@ -1,0 +1,52 @@
+TD1 : Nicolas van Heusden
+
+-- How would you define the concept of a commodity machine ?
+Ce sont des machines simples très peu couteuse et très peu puissantes.
+
+-- What is the motivation behind creating the MapReduce programming model?
+Le volume de données
+
+-- How early in the creation of Google Inc. MapReduce was created?
+We wrote the first version of the MapReduce library in February of 2003
+
+
+-- What kind of complexity is MapReduce addressing ?
+Big data processing.
+scalabity.
+tolérance aux fautes.
+MapReduce is addressing these complexities : parallelization, fault-tolerance, data distribution and load balancing in a library.
+
+-- How are they being addressed ?
+Ils proposent une api simple où il y a un map et un reduce.
+Le master est responsable de la faute tolérance
+tolérance aux pannes fonctionnent par les hardbytes (heartbytes) des workers.
+The user of the MapReduce library expresses the computation as two functions: Map and Reduce.
+
+
+-- Do you understand the signatures of map and reduce in MapReduce?
+Le mapper recoit une entrée k/v et renvoi une liste intermédiaire de k/v
+Le reduce recoit un k/v intermediaire and merges the values to produce a result.
+
+-- In a MapReduce task, what is being inplemented by the user/programmer and what comes for free in terms of processing?
+
+L'utilisateur doit programmer le map et le reduce.
+
+Ce qui vient gratuitement est le fait que les valeures associées aux clés sont regroupées dans la même clé intermédiare au moment d'arriver au reducer.
+
+-- For what kind of files MapReduce has been especially designed ?
+Pour des fichiers types textes. Google File System (GFS) files.
+
+-- What are some limitations of MapReduce?
+Limite de devoir déplacer du fichier texte de plusieurs Mb.
+Devoir ré-implémenter le map et reduce à chaque fois exemple du join.
+à chaque Map et Reduce il enregistre sur le disque ce qui fait que si on les chaines on va devoir enregistrer les mêmes valeures plusieurs fois sur le disque.
+
+donc Api simple -> mais pour faire des trucs puissant il fallait des énormes map et reduce et devoir les chainer.
+et si le master tombe, le système est trop long à redémarrer perf en grosse baisse.
+
+-- Why is it important that the operations are deterministic in MapReduce computation?
+Sinon on a un resultat qui pourrait varier d'une exécution à l'autre.
+exemple sur l'heure ou un diviseur random.
+
+
+
