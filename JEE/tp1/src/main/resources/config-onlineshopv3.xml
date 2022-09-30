@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" >
+
+    <bean class="fr.uge.jee.onlineshop.delivery.StandardDelivery">
+        <property name="delay" value="999" />
+    </bean>
+
+    <!--<bean class="fr.uge.jee.onlineshop.delivery.DroneDelivery" />-->
+
+    <bean class="fr.uge.jee.onlineshop.insurance.ReturnInsurance">
+        <property name="onlyMember" value="false" />
+    </bean>
+
+    <bean class="fr.uge.jee.onlineshop.insurance.ThiefInsurance" />
+
+    <bean class="fr.uge.jee.onlineshop.OnlineShop" autowire="byType">
+        <property name="name" value="AhMaZone" />
+
+    </bean>
+</beans>

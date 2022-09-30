@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="standardDelivery" class="fr.uge.jee.onlineshop.delivery.StandardDelivery">
+        <property name="delay" value="5" />
+    </bean>
+
+    <bean id="droneDelivery" class="fr.uge.jee.onlineshop.delivery.DroneDelivery" />
+
+    <bean id="returnInsurance" class="fr.uge.jee.onlineshop.insurance.ReturnInsurance">
+        <property name="onlyMember" value="true" />
+    </bean>
+
+    <bean id="amazon" class="fr.uge.jee.onlineshop.OnlineShop">
+
+        <property name="name" value="Amazon" />
+
+        <property name="deliveryOptions">
+            <set>
+                <ref bean="droneDelivery" />
+                <ref bean="standardDelivery" />
+            </set>
+        </property>
+
+        <property name="insurances">
+            <set>
+                <ref bean="returnInsurance"/>
+            </set>
+        </property>
+    </bean>
+
+</beans>
