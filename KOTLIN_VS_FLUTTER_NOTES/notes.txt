@@ -1,0 +1,326 @@
+/// FINAL VARIABLES
+// Flutter 
+final String name = 'Nico';
+
+// Kotlin
+val name:String = "Nico"
+
+----------------------------------------------------------------
+
+/// NULL SAFETY
+// Flutter
+final String? name = 'Nico';
+name!.toString();
+
+//Kotlin
+val name:String? = "Nico"
+name?.length() ?: -1
+
+----------------------------------------------------------------
+
+/// CONSTANT
+// Flutter
+static const String SERVER_URL = "https://my.api.com";
+
+// Kotlin
+const val SERVER_URL: String = "https://my.api.com" 
+
+
+----------------------------------------------------------------
+
+/// LATE
+//Flutter
+late String name = 'NICO';
+
+//Kotlin
+lateinit var name: String = "Nico"
+
+----------------------------------------------------------------
+
+/// PACKAGES
+// Flutter
+pubspeck.yaml
+
+
+// Kotlin
+build.gradle
+dependencies {}
+
+----------------------------------------------------------------
+
+/// FUNCTIONS
+// Flutter
+private int minOf(int a, int b) {
+	return a < b ? a : b;
+}
+
+
+// Kotlin
+private fun minOf(a: Int, b: Int): Int {
+	return a < b ? a : b
+}
+
+
+** one line function **
+// Flutter
+private function minOf(int a, int b) => a < b ? a : b
+
+// Kotlin
+private fun minOf(a: Int, b:Int): Int = if (a < b) a else b 
+private fun minOf(a: Int, b:Int) = if (a < b) a else b
+
+
+** void function **
+// Flutter
+void main(Array<String> args) {
+	print("Hello, world!");
+}
+
+var hello = main(['']);
+
+
+// Kotlin
+fun main(args: Array<String>) {
+    println("Hello, world!")
+}
+
+* fun sayHello() = prinln("Hello") *
+* fun sayHello():Unit = prinln("Hello") *
+
+var hello: Unit = main(arrayOf(""))
+
+** dynamic function ** 
+// wrong ❌
+fun getUrlApi() { return "https://www.my.api.com" }
+
+// okay ✅
+fun getUrlApi(): String { return "https://www.my.api.com" }
+
+// Perfect 💯
+fun getUrlApi() = "https://www.my.api.com"
+
+
+----------------------------------------------------------------
+
+/// Class
+
+// Flutter
+class User {
+	
+}
+
+
+// Kotlin 
+class User(val email: String, val password: String, val age: Int)
+
+var définit getter and setter
+val définit seulement getter
+
+// getter -> user.email 
+
+
+** redefine setter and getter **
+
+// Flutter
+class User {
+	
+}
+
+
+// Kotlin
+
+class User(email: String, private var password: String, var age: Int){
+    var email: String = email
+        get() { 
+            println("User is getting his email."); 
+            return field 
+        }
+        set(value) { 
+            println("User is setting his email"); 
+            field = value 
+        }
+}
+
+
+----------------------------------------------------------------
+
+/// SWITCH 
+// Flutter
+
+int apiResponse = 200;
+
+switch (apiResponse) {
+    case 200: 
+    	print("OK");
+        break;
+    case 404: 
+    	print("NOT FOUND");
+        break;
+    case 401: 
+    	print("UNAUTHORIZED");
+        break;
+    case 403: 
+    	print("FORBIDDEN");
+        break;
+    default: 
+    	print("UNKNOWN");
+        break;
+}
+
+// Kotlin
+
+int apiResponse = 404
+
+when(apiRepsponse) {
+	200, 201, 202 -> print("Ok")
+	400, 404 -> print("NOT FOUND")
+	else -> print("UNKNOWN")
+}
+
+
+val apiResponse = 200
+
+when {
+    isSuccess(apiResponse) -> print("SUCCESS")
+    isError(apiResponse) -> print("ERROR")
+}
+
+fun isSuccess(apiResponse: Int) = apiResponse == 200 || apiResponse == 201 || apiResponse == 202
+
+fun isError(apiResponse: Int) = apiResponse == 400 || apiResponse == 404
+
+
+** range **
+
+when(numberToFind) {
+    in 1..33 -> print("Number is between 1 and 33")
+    in 34..66 -> print("Number is between 34 and 66")
+    in 67..100 -> print("Number is between 67 and 100")
+}
+
+----------------------------------------------------------------
+
+/// ENUM
+
+// Flutter
+enum ApiResponse{
+	ok(200),
+	notFound(404),
+	unauthorised(401);
+
+	ApiResponse(this.code);
+
+	private final int code;
+}
+
+// Kotlin
+enum class ApiResponse(val code: Int) {
+    OK(200),
+    NOT_FOUND(404),
+    UNAUTHORIZED(401),
+    FORBIDDEN(403),
+    UNKNOWN(0)
+}
+
+
+
+----------------------------------------------------------------
+
+/// LOOP
+
+** for **
+// Flutter
+for (final name in names) {
+	...
+}
+
+// Kotlin
+for( name in names) {
+	...
+}
+
+* one line *
+for (i in 0..3) ...
+
+* reverse range and step*
+for (i in 10 downTo 1 step 2) {
+	...
+}
+
+
+----------------------------------------------------------------
+
+/// NAMED ARGUMENTS
+// Flutter
+void displayRepetitiveMessage({
+	final String message,
+	final String errorMessage,
+	final int repeat,
+	final int delay,
+	final bool isSilent
+}) {
+ 	try{
+	    Thread.sleep(delay.toLong());
+	    while(true) {
+	        if (!isSilent) println("$message $i times(s)");
+	    }
+	} catch (ex: InterruptedException){
+	    println(errorMessage)
+	}
+}
+
+
+// Kotlin
+fun displayRepetitiveMessage(message: String, errorMessage: String, repeat: Int, delay: Int, isSilent: Boolean){
+    try{
+        Thread.sleep(delay.toLong());
+        for(i in 0 until repeat) {
+            if (!isSilent) println("$message $i times(s)");
+        }
+    } catch (ex: InterruptedException){
+        println(errorMessage)
+    }
+}
+
+
+----------------------------------------------------------------
+Note Kotlin
+
+Any == Object in java
+
+anyObject is String (to test if anyObject is a String)
+
+private fun getDefaultSize(anyObject: Any) = when (anyObject) {
+    is String -> anyObject.length
+    is List<*> -> anyObject.size
+    else -> 0
+}
+
+
+<*> Generic operator
+
+
+/// NOTHING
+// Nothing est le Type retourné d'une expression "throw"
+private fun fail(message: String): Nothing = throw IllegalStateException(message)
+
+val password = user.password ?: fail("Password required")
+val email = user.email ?: fail("Email required")
+
+** D'ailleurs, ce type est renvoyé par la fonction TODO() **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
