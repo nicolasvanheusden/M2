@@ -11,7 +11,7 @@ public class LibraryServer {
     public static void main(String[] args) throws RemoteException, MalformedURLException {
         LocateRegistry.createRegistry(1099);
         Library library = new Library();
-        Naming.rebind("rmi://localhost/Library", library);
+        Naming.rebind("rmi://localhost:1099/Library", library);
         System.out.println("Le Serveur est prêt...");
     }
 }

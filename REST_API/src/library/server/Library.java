@@ -1,7 +1,7 @@
 package library.server;
 
 
-import library.common.Book;
+import library.common.IBook;
 import library.common.ILibrary;
 
 import java.rmi.RemoteException;
@@ -31,8 +31,8 @@ public class Library extends UnicastRemoteObject implements ILibrary {
     }
 
     @Override
-    public List<Book> findBookByTitle(String title) throws RemoteException{
-        var list = new ArrayList<Book>();
+    public List<IBook> findBookByTitle(String title) throws RemoteException {
+        var list = new ArrayList<IBook>();
         for (var book: bdd.values()) {
             if (book.title().equals(title)) {
                 list.add(book);
@@ -42,8 +42,8 @@ public class Library extends UnicastRemoteObject implements ILibrary {
     }
 
     @Override
-    public List<Book> findBookByAuthor(String author) throws RemoteException {
-        var list = new ArrayList<Book>();
+    public List<IBook> findBookByAuthor(String author) throws RemoteException {
+        var list = new ArrayList<IBook>();
         for (var book: bdd.values()) {
             if (book.author().equals(author)) {
                 list.add(book);
