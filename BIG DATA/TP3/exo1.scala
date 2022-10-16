@@ -35,5 +35,4 @@ var rooted = roots.join(soPairs.groupByKey()).map(x => (x._2._1, x._2._2.toList.
 rooted.foreach(println)
 
 
-
 soPairs.unpersist()
