@@ -6,9 +6,34 @@ import 'package:bike_rent/src/features/bike/view/widgets/bike_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => BuyBikeBloc()..add(const BuyBikeEvent.fetchBuyBikes()),
+          ) ,
+          BlocProvider(
+              create: (context) => RentBikeBloc()..add(const RentBikeEvent.fetchRentBikes()),
+          ),
+        ],
+      child: const HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   
   @override
   Widget build(BuildContext context) {
@@ -92,7 +117,14 @@ class HomePage extends StatelessWidget {
                   }
                 ),
               ]
-            )
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},//TODO: implement add bike here
+              backgroundColor: widgetButtonColor,
+              child: const Icon(
+                Icons.add,
+              ),
+            ),
           ),
         );
       }
