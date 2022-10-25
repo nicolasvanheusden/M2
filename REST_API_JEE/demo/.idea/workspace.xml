@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81256e27-acff-4535-b944-86f35da207a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../REST_API/src/library/common/IBook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../REST_API/src/library/server/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/client/LibraryClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/client/LibraryClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/common/Book.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/common/ILibrary.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/common/ILibrary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/server/Library.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/server/Library.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/server/LibraryServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/out/production/REST_API/library/server/LibraryServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/src/library/client/LibraryClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/src/library/client/LibraryClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/src/library/common/Book.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/src/library/common/ILibrary.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/src/library/common/ILibrary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/src/library/server/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/src/library/server/Library.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../REST_API/src/library/server/LibraryServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../REST_API/src/library/server/LibraryServer.java" afterDir="false" />
-    </list>
+    <list default="true" id="81256e27-acff-4535-b944-86f35da207a1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1665504023041</updated>
       <workItem from="1665504061333" duration="59000" />
+      <workItem from="1665916064189" duration="13000" />
     </task>
     <servers />
   </component>

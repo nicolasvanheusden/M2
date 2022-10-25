@@ -10,8 +10,6 @@ import java.rmi.RemoteException;
 
 public class LibraryClient {
     public static void main(String[] args) throws MalformedURLException, NotBoundException, RemoteException {
-
-
         try {
             var library = (ILibrary) Naming.lookup("rmi://localhost:1099/Library");
 
