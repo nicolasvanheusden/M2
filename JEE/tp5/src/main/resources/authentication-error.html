@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PokeMatch</title>
+</head>
+<body>
+<form th:action="@{/authententication}" method="post">
+    <h2>Register : </h2>
+    <div><label for="firstname">firstname:</label>
+        <input id="firstname" type="text" name="firstname"></div>
+
+    <div><label for="lastname">LastName:</label>
+        <input type="text" id="lastname" name="lastname"></div>
+
+    <div><button type="submit">Register !</button></div>
+</form>
+<p th:text=error-form></p>
+</body>
+</html>
