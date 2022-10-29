@@ -18,7 +18,8 @@ public class Application {
         return defaultBuilder.exchangeStrategies(ExchangeStrategies.builder()
             .codecs(configurer -> configurer
                 .defaultCodecs()
-                .maxInMemorySize(16 * 1024 * 1024)).build()).build();
+                .maxInMemorySize(16 * 1024 * 1024)).build())
+            .build();
     }
 
 

@@ -22,7 +22,7 @@ public class PokemonReferenceDTO {
         this.results = results;
     }
 
-    List<PokemonReference> toModel() {
+    public List<PokemonReference> toModel() {
         return results
             .stream()
             .map((m) -> new PokemonReference(m.get("name"), m.get("url")))
