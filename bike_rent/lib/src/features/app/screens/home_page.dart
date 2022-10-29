@@ -3,6 +3,7 @@ import 'package:bike_rent/src/core/constant/text_style.dart';
 import 'package:bike_rent/src/features/bike/bloc/buy_bike/buy_bike_bloc.dart';
 import 'package:bike_rent/src/features/bike/bloc/rent_bike/rent_bike_bloc.dart';
 import 'package:bike_rent/src/features/bike/view/widgets/bike_card.dart';
+import 'package:bike_rent/src/features/shop_cart/view/widget/shop_cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,15 +56,8 @@ class _HomeViewState extends State<HomeView> {
                     style: myTextStyle(fontSize: 28, fontWeight: FontWeight.w500),
                   ),
                   backgroundColor: widgetBackgroundColor,
-                  actions: [
-                    IconButton(
-                      onPressed: () {}, //TODO: implement login here,
-                      icon: Icon(
-                        Icons.person_rounded,
-                        color: widgetButtonColor,
-                        size: 30,
-                      )
-                    ),
+                  actions: const [
+                    ShopCartButton()
                   ],
                   bottom: TabBar(
                     labelStyle: myTextStyle(fontSize: 20),

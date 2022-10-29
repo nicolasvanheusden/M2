@@ -1,6 +1,3 @@
-
-
-
 import 'package:bike_rent/src/features/score/domain/return_status_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
