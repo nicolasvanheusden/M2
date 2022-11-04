@@ -1,0 +1,68 @@
+{
+    "bikes": [
+        {
+            "id": 0,
+            "model": "Vélo VTT",
+            "scores": [
+                {
+                    "score": 5,
+                    "status": "perfect"
+                }
+            ],
+            "owner": {
+                "id": 0,
+                "name": "BlaBlaBike",
+                "type": "ownerCompany"
+            },
+            "rentPrice": 50
+        },
+        {
+            "id": 1,
+            "model": "Vélo de ville",
+            "scores": [
+                {
+                    "score": 3,
+                    "status": "correct"
+                }
+            ],
+            "owner": {
+                "id": 0,
+                "name": "BlaBlaBike",
+                "type": "ownerCompany"
+            },
+            "rentPrice": 10
+        },
+        {
+            "id": 2,
+            "model": "Vélo de course",
+            "scores": [
+                {
+                    "score": 5,
+                    "status": "perfect"
+                }
+            ],
+            "owner": {
+                "id": 0,
+                "name": "BlaBlaBike",
+                "type": "ownerCompany"
+            },
+            "rentPrice": 100
+        },
+        {
+            "id": 3,
+            "model": "Vélo de ville",
+            "scores": [
+                {
+                    "score": 2,
+                    "status": "bad"
+                }
+            ],
+            "owner": {
+                "id": 0,
+                "name": "BlaBlaBike",
+                "type": "ownerCompany"
+            },
+            "rentPrice": 10
+        }
+    ]
+}

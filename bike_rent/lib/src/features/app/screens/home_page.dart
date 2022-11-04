@@ -2,6 +2,8 @@ import 'package:bike_rent/src/core/constant/colors.dart';
 import 'package:bike_rent/src/core/constant/text_style.dart';
 import 'package:bike_rent/src/features/bike/bloc/buy_bike/buy_bike_bloc.dart';
 import 'package:bike_rent/src/features/bike/bloc/rent_bike/rent_bike_bloc.dart';
+import 'package:bike_rent/src/features/bike/data/datasources/bike_local_source.dart';
+import 'package:bike_rent/src/features/bike/data/repositories/bike_localhost_repository.dart';
 import 'package:bike_rent/src/features/bike/view/widgets/bike_card.dart';
 import 'package:bike_rent/src/features/shop_cart/view/widget/shop_cart_button.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +18,12 @@ class HomePage extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => BuyBikeBloc()..add(const BuyBikeEvent.fetchBuyBikes()),
+            create: (context) => BuyBikeBloc(BikeLocalhostRepository(BikeLocalSource()))
+              ..add(const BuyBikeEvent.fetchBuyBikes()),
           ) ,
           BlocProvider(
-              create: (context) => RentBikeBloc()..add(const RentBikeEvent.fetchRentBikes()),
+              create: (context) => RentBikeBloc(BikeLocalhostRepository(BikeLocalSource()))
+              ..add(const RentBikeEvent.fetchRentBikes()),
           ),
         ],
       child: const HomeView(),
