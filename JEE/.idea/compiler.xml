@@ -8,16 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="tp5" />
         <module name="tp4" />
+        <module name="tp6" />
         <module name="tp3" />
         <module name="tp2" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="tp2" target="11" />
-      <module name="tp3" target="11" />
-      <module name="tp4" target="11" />
-      <module name="tp5" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
