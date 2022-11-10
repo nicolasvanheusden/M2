@@ -24,4 +24,12 @@ public class PokemonReference {
             ", url='" + url + '\'' +
             '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

@@ -5,6 +5,18 @@
     <title>PokeMatch</title>
 </head>
 <body>
-<h1>Welcome on PokeMatch Website</h1>
+
+<h1 th:text="'Welcome on PokeMatch Website ' + ${user.getFirstName()} + ' !'"></h1>
+
+
+<p th:text="'You are the most compatible with ' +${compatiblePokemon.getName()}"></p>
+<img th:src="'data:image/png;base64, '+${pokemonImageUrl}" width="100px" />
+
+<p>Favorites' Pokemons : </p>
+<ol>
+    <li th:each="pokemon: ${favoritePokemons}" th:text="${pokemon.getName()}" />
+</ol>
+
+
 </body>
 </html>

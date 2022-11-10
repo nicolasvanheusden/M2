@@ -1,0 +1,39 @@
+type Query {
+    references: PokemonReference
+    pokemon(name: String!): Pokemon
+    pokemonGL(id: Int!): PokemonGL
+}
+
+
+type PokemonGL{
+    data: PokemonInnerGL
+}
+
+
+type PokemonInnerGL {
+    pokemon_v2_pokemonformsprites: Sprites
+    pokemon_v2: [Pokemon]
+}
+
+
+type ResultMap {
+    name: String!
+    url: String!
+}
+
+type PokemonReference {
+    count: Int!
+    results: [ResultMap]
+}
+
+type Pokemon {
+    id: Int!
+    name: String!
+    sprites: Sprites
+    base_experience: Int
+}
+
+type Sprites {
+    front_default: String
+}
+

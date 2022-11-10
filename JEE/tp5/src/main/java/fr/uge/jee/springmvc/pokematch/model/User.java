@@ -17,19 +17,15 @@ public class User {
     @Pattern(regexp="^[a-zA-Z]+$", message="Enter only letters")
     private String lastName;
 
-    private final ArrayList<Pokemon> favouritesPokemon;
 
     public User(String firstName, String lastName) {
         Objects.requireNonNull(firstName);
         Objects.requireNonNull(lastName);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.favouritesPokemon = new ArrayList<>();
     }
 
-    public User() {
-        this.favouritesPokemon = new ArrayList<>();
-    }
+    public User() {}
 
 
     public String getFirstName() {
@@ -50,9 +46,9 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void addPokemon(Pokemon pokemon) {
-        Objects.requireNonNull(pokemon);
-        this.favouritesPokemon.add(pokemon);
+    @Override
+    public int hashCode() {
+        return firstName.hashCode() ^ lastName.hashCode();
     }
 
     @Override
