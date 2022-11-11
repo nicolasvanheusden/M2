@@ -1,5 +1,6 @@
 package com.example.tp3
 
+import android.app.GameManager
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import com.example.tp3.Chronometer
 import com.example.tp3.ui.theme.Tp3Theme
 import kotlinx.coroutines.delay
 import java.time.Instant
+import kotlin.math.exp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +32,7 @@ class MainActivity : ComponentActivity() {
             Tp3Theme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    ChronoGame(expectedDuration = 10000L, onVerdict = {times -> {}})
-
+                    GameManager()
                 }
             }
         }
@@ -110,7 +111,7 @@ fun ChronometerManager() {
 }
 
 @Composable
-fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
+fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit, state: GameState, onStart: () -> Unit) {
 
     var endTime by remember {
         mutableStateOf(0L)
@@ -121,6 +122,15 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
     var visible by remember {
         mutableStateOf(false)
     }
+
+    var difference by remember {
+        mutableStateOf((SystemClock.elapsedRealtime() - startTime) >= (expectedDuration / 2))
+    }
+
+    var differenceTime by remember {
+        mutableStateOf((SystemClock.elapsedRealtime() - startTime))
+    }
+
     Column {
         DeltaTimeDisplayer(expectedDuration)
         Box(
@@ -150,15 +160,13 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
                         contentScale = ContentScale.FillWidth
                     )
             }
-
         }
-
-
-        Row() {
+        Row {
             Button(
                 onClick = {
                     endTime=-1L
                     startTime = SystemClock.elapsedRealtime()
+                    onStart.invoke()
                 }
             ) {
                 Text(
@@ -168,8 +176,11 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
             }
             Button(
                 onClick = {
-                    endTime=SystemClock.elapsedRealtime()
-                    onVerdict(endTime-startTime)
+                    if (state == GameState.START) {
+                        endTime=SystemClock.elapsedRealtime()
+                        onVerdict(endTime-startTime)
+                    }
+
                 }
             ) {
                 Text(
@@ -179,13 +190,73 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
             }
         }
     }
-    LaunchedEffect(true) {
+
+    LaunchedEffect(state) {
         while(true) {
-            visible = endTime == -1L && SystemClock.elapsedRealtime() - startTime >= (expectedDuration / 2)
+            differenceTime = (SystemClock.elapsedRealtime() - startTime)
+            difference = differenceTime > (expectedDuration / 2)
+            visible = endTime == -1L && difference
             delay(25)
+
         }
     }
 }
+
+
+@Composable
+fun GameManager() {
+    var state by remember {
+        mutableStateOf(GameState.INIT);
+    }
+    var sliderPosition by remember { mutableStateOf(0f) }
+    var result by remember {
+        mutableStateOf(0.0)
+    }
+    var actualDuration by remember {
+        mutableStateOf(0L)
+    }
+    Column() {
+        Slider(
+            value=sliderPosition,
+            valueRange = 1f..10f,
+            onValueChange = {
+                sliderPosition = it
+            },
+            steps = 10
+        )
+        ChronoGame(
+            expectedDuration = sliderPosition.toLong() * 1000L,
+            onVerdict = {
+                state = GameState.END
+                actualDuration = it
+                result= errorPercentage(
+                    expectedDuration = sliderPosition.toLong() * 1000L,
+                    actualDuration = actualDuration
+                )
+            },
+            state=state,
+            onStart = {
+                state = GameState.START
+            }
+        )
+        if (state == GameState.END)
+            Text(
+            "Your time : ${actualDuration / 1000f} seconds -> percentage $result %"
+            )
+
+    }
+
+    LaunchedEffect(state) {
+        if (state == GameState.END) {
+            // TODO launch sound
+        }
+    }
+}
+
+fun errorPercentage(expectedDuration: Long, actualDuration: Long) : Double {
+    return ((actualDuration / expectedDuration.toDouble()) * 100) - 100
+}
+
 
 @Preview(
     showBackground = true,
@@ -196,6 +267,6 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit) {
 @Composable
 fun DefaultPreview() {
     Tp3Theme {
-        ChronoGame(expectedDuration = 1000L, onVerdict = {time -> })
+        ChronoGame(expectedDuration = 1000L, onVerdict = {time -> }, state = GameState.START, onStart = {})
     }
 }
