@@ -197,7 +197,9 @@ fun ChronoGame(expectedDuration: Long, onVerdict: (Long) -> Unit, state: GameSta
             difference = differenceTime > (expectedDuration / 2)
             visible = endTime == -1L && difference
             delay(25)
-
+            if (state == GameState.END) {
+                break
+            }
         }
     }
 }
