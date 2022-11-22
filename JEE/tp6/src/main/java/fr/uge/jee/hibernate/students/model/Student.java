@@ -3,6 +3,7 @@ package fr.uge.jee.hibernate.students.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -11,13 +12,17 @@ public class Student {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
+    @Embedded
     private Address address;
-    @ManyToOne
+    @Embedded
     private University university;
     @OneToMany
+    @JoinColumn(name = "Student_Id")
     private List<Comment> comments;
     @OneToMany
+    @JoinColumn(name="Students_PhoneNumbers",
+        joinColumns=@JoinColumn(name="Student_Id"),
+        inverseJoinColumns=@JoinColumn(name="Lecture_Id"))
     private Set<Lecture> lectures;
 
 
@@ -64,10 +69,27 @@ public class Student {
     public Student(Address address, University university, List<Comment> comments, Set<Lecture> lectures) {
         this.address = address;
         this.university = university;
-        this.comments = comments;
-        this.lectures = lectures;
+        this.comments = List.copyOf(comments);
+        this.lectures = Set.copyOf(lectures);
     }
 
     public Student() {
     }
+
+    public void addLecture(Lecture lecture) {
+        Objects.requireNonNull(lecture);
+        lectures.add(lecture);
+    }
+
+    public void addComment(Comment comment) {
+        Objects.requireNonNull(comment);
+        comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        Objects.requireNonNull(comment);
+        comments.remove(comment);
+    }
+
+
 }

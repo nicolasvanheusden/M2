@@ -12,10 +12,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -112,21 +113,72 @@ fun HelloWorld(name: String) {
             flag={ BahamasFlag() }
         )
     )
-    Scaffold() {
+    var showFlag by remember {
+        mutableStateOf(false)
+    }
+    var mainCountry by remember {
+        mutableStateOf(countryList.first())
+    }
+    Scaffold(
+        topBar= {
+            Row(
+                verticalAlignment= Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.primary),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text("Country Data")
+                IconButton(
+                    onClick = { showFlag = !showFlag },
+                ) {
+                    Icon(
+                        imageVector = if (showFlag) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircle,
+                        contentDescription = "Flag displayer",
+                    )
+                }
+            }
+        },
+
+        drawerContent = {
+            LazyColumn() {
+                items(countryList) { country ->
+                    TextButton(
+                        onClick = { mainCountry = country }) {
+                        Text(
+                            text = country.name
+                        )
+                    }
+                }
+            }
+        },
+
+        bottomBar = {
+            BottomAppBar(
+                modifier=Modifier.background(MaterialTheme.colors.primary)
+            ) {
+
+            }
+        },
+
+        floatingActionButton = {
+            IconButton(
+                modifier = Modifier.background(MaterialTheme.colors.primary),
+                onClick = {
+                    mainCountry = countryList.random()
+                })
+            {
+                Icon(
+                    imageVector= Icons.Rounded.Search,
+                    contentDescription = "Shuffle country"
+                )
+            }
+        }
+    ) {
         Column {
-            /*
-            HelloWorldMessage(name = name, counter = counter)
-            WorldMap(
-                mapClick = { counter++ },
-                mapDoubleClick = {counter += 4}
-            )
-            FrenchFlag()
-            ChadFlag()
-            JapanFlag()
-            BahamasFlag()
-             */
             CountryDisplayer(
-                country=countryList.first()
+                country=mainCountry,
+                showFlag=showFlag
             )
 
         }
@@ -340,19 +392,18 @@ fun RankedValueDisplayer(value: Float, unit: String, rank: Rank, name: String, d
 
 @Composable
 fun ClockDisplayer(tz: TimeZone) {
-    var counter by rememberSaveable { mutableStateOf(0L) }
-    val date = Date.from(Instant.now().atZone(tz.toZoneId()).toInstant().plusSeconds(counter))
+    var now by remember {mutableStateOf(Date()) }
 
     Text(
-        "$date",
+        "$now",
         fontSize = 20.sp,
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center
     )
 
-    LaunchedEffect(date) {
+    LaunchedEffect(now) {
         delay(1000L) // convert to milliseconds
-        counter++
+        now = Date()
     }
 }
 
@@ -374,99 +425,100 @@ fun ComputeWidth(labels: @Composable () -> Unit, content: @Composable (width: Dp
 }
 
 @Composable
-fun CountryDisplayer(country: Country) {
-    Scaffold() {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = country.name,
-                color = Color.Black,
-                fontSize = 24.sp
-            )
-            Row() {
-                FlagDisplayer(country = country)
-                Image(
-                    painter = painterResource(country.pictureID),
-                    contentDescription = "capital",
-                )
-            }
-            
-            ClockDisplayer(tz = country.timeZone)
-            ComputeWidth(
-                labels = {
-                    Row {
-                        Text("area")
-                        Text("Population")
-                        Text("density")
-                        Text("GDP per capital")
-                    }
-                },
-                content = {
-                    RankedValueDisplayer(value = country.areaFact.value,
-                        unit = country.areaFact.unit,
-                        rank = country.areaFact.rank,
-                        name = "area",
-                        dp = it)
-                }
-            )
-            ComputeWidth(
-                labels = {
-                    Row {
-                        Text("area")
-                        Text("Population")
-                        Text("density")
-                        Text("GDP per capital")
-                    }
-                },
-                content = {
-                    RankedValueDisplayer(
-                        value = country.populationFact.value,
-                        unit = country.populationFact.unit,
-                        rank = country.populationFact.rank,
-                        name = "Population",
-                        dp = it)
-                }
-            )
-            ComputeWidth(
-                labels = {
-                    Row {
-                        Text("area")
-                        Text("Population")
-                        Text("density")
-                        Text("GDP per capital")
-                    }
-                },
-                content = {
-                    RankedValueDisplayer(
-                        value = country.densityFact.value,
-                        unit = country.densityFact.unit,
-                        rank = country.densityFact.rank,
-                        name = "density",
-                        dp = it)
-                }
-            )
-            ComputeWidth(
-                labels = {
-                    Row {
-                        Text("area")
-                        Text("Population")
-                        Text("density")
-                        Text("GDP per capital")
-                    }
-                },
-                content = {
-                    RankedValueDisplayer(
-                        value = country.perCapitalGDPFact.value,
-                        unit = country.perCapitalGDPFact.unit,
-                        rank = country.perCapitalGDPFact.rank,
-                        name = "GDP per capital",
-                        dp = it)
-                }
-            )
+fun CountryDisplayer(country: Country, showFlag: Boolean) {
 
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = country.name,
+            color = Color.Black,
+            fontSize = 24.sp
+        )
+        Row() {
+            if (showFlag)
+                FlagDisplayer(country = country)
+            Image(
+                painter = painterResource(country.pictureID),
+                contentDescription = "capital",
+            )
         }
+
+        ClockDisplayer(tz = country.timeZone)
+        ComputeWidth(
+            labels = {
+                Row {
+                    Text("area")
+                    Text("Population")
+                    Text("density")
+                    Text("GDP per capital")
+                }
+            },
+            content = {
+                RankedValueDisplayer(value = country.areaFact.value,
+                    unit = country.areaFact.unit,
+                    rank = country.areaFact.rank,
+                    name = "area",
+                    dp = it)
+            }
+        )
+        ComputeWidth(
+            labels = {
+                Row {
+                    Text("area")
+                    Text("Population")
+                    Text("density")
+                    Text("GDP per capital")
+                }
+            },
+            content = {
+                RankedValueDisplayer(
+                    value = country.populationFact.value,
+                    unit = country.populationFact.unit,
+                    rank = country.populationFact.rank,
+                    name = "Population",
+                    dp = it)
+            }
+        )
+        ComputeWidth(
+            labels = {
+                Row {
+                    Text("area")
+                    Text("Population")
+                    Text("density")
+                    Text("GDP per capital")
+                }
+            },
+            content = {
+                RankedValueDisplayer(
+                    value = country.densityFact.value,
+                    unit = country.densityFact.unit,
+                    rank = country.densityFact.rank,
+                    name = "density",
+                    dp = it)
+            }
+        )
+        ComputeWidth(
+            labels = {
+                Row {
+                    Text("area")
+                    Text("Population")
+                    Text("density")
+                    Text("GDP per capital")
+                }
+            },
+            content = {
+                RankedValueDisplayer(
+                    value = country.perCapitalGDPFact.value,
+                    unit = country.perCapitalGDPFact.unit,
+                    rank = country.perCapitalGDPFact.rank,
+                    name = "GDP per capital",
+                    dp = it)
+            }
+        )
+
     }
+
 }
 
 

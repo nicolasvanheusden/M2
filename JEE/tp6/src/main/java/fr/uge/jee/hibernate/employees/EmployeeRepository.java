@@ -111,7 +111,7 @@ public class EmployeeRepository {
      * Return the list of the employee in the DB
      * @param firstName
      */
-    List<Employee> getAllByFirstName(String firstName) {
+    public List<Employee> getAllByFirstName(String firstName) {
         return PersistenceUtils.inTransaction((em) -> {
             var request = "SELECT DISTINCT e from Employee e WHERE e.firstName= :firstName";
             TypedQuery<Employee> query = em.createQuery(request ,Employee.class);

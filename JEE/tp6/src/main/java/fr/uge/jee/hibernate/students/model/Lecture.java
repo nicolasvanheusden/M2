@@ -3,8 +3,10 @@ package fr.uge.jee.hibernate.students.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Lectures")
 public class Lecture {
 
     @Id

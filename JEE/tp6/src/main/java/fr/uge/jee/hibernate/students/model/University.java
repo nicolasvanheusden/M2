@@ -1,11 +1,11 @@
 package fr.uge.jee.hibernate.students.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Universities")
+@Embeddable
 public class University {
 
     @Id
