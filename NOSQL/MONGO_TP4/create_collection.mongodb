@@ -1,0 +1,108 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+const database = 'movie';
+const movieCollection = 'movieCollection';
+const personCollection = 'personCollection';
+const genreCollection = 'genreCollection';
+
+
+// Create a new database.
+use(database);
+
+db.genreCollection.drop();
+db.movieCollection.drop();
+db.personCollection.drop();
+
+db.createCollection(genreCollection, {
+  validator: {$jsonSchema: {
+    bsonType: "object",
+    required: ["idGenre", "name"],
+    properties: {
+      idGenre: {
+        bsonType: "number",
+        description: "must be an integer and is required"
+      },
+      label: {
+        bsonType: "string",
+        description: "must be a string and is required"
+      }
+    }  
+  }}
+});
+
+db.createCollection(personCollection, {
+  validator: {$jsonSchema: {
+    bsonType: "object",
+    required: ["idPerson", "firstName", "Lastname", "birthDate", "isA"],
+    properties: {
+      idPerson: {
+        bsonType: "number",
+        description: "must be an integer and is required"
+      },
+      firstName: {
+        bsonType: "string",
+        description: "must be a string and is required"
+      },
+      lastName: {
+        bsonType: "string",
+        description: "must be a string and is required"
+      },
+      birthDate: {
+        bsonType: "date",
+        description: "must be a date and is required"
+      },
+      isA: {
+        enum: ["actor", "director"],
+        description: "can only be one of the enum values and is required"
+      }
+    }  
+  }}
+});
+
+
+
+
+// Create a new collection.
+db.createCollection(movieCollection, {
+  validator: {$jsonSchema: {
+    bsonType: "object",
+    required: ["idFilm", "title", "year", "summary", "genre", "director", "actors"],
+    properties: {
+      idFilm: {
+        bsonType: "number",
+        description: "must be an integer and is required"
+      },
+      title: {
+        bsonType: "string",
+        description: "must be a string and is required"
+      },
+      year: {
+        bsonType: "number",
+        description: "must be a date and is required"
+      },
+      summary: {
+        bsonType: "string",
+        description: "must be a string and is required"
+      },
+      genre: {
+        bsonType: "number",
+        description: "must be a genreId and is required",
+      },
+      director: {
+        bsonType: "number",
+        description: "must be a personId and is required"
+      },
+      actors: {
+        bsonType: "array",
+        description: "must be an array of personId and is required",
+        items: {
+          bsonType: "number",
+          description: "must be a personId and is requred"
+        }
+      },
+    }  
+  }}
+});
+
+
