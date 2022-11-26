@@ -1,8 +1,8 @@
-package fr.uge.busytraveler.model
+package com.uge.tp4
 
 import android.content.Context
 import android.graphics.RectF
-import android.location.Location
+import java.io.InputStream
 import java.util.zip.GZIPInputStream
 import kotlin.math.*
 
@@ -20,7 +20,7 @@ data class Town(val name: String, val latitude: Float, val longitude: Float, val
         }
 
         fun parseFile(context: Context, path: String) =
-            GZIPInputStream(context.assets.open(path)).bufferedReader().use { it.lineSequence().mapNotNull { l -> parseLine(l) }.toList() }
+            context.assets.open(path).bufferedReader().use { it.lineSequence().mapNotNull { l -> parseLine(l) }.toList() }
     }
 }
 
