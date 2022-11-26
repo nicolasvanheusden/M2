@@ -5,6 +5,8 @@ const database = 'movie';
 const movieCollection = 'movieCollection';
 const personCollection = 'personCollection';
 const genreCollection = 'genreCollection';
+const actorCollection = 'actorCollection';
+const directorCollection = 'directorCollection';
 
 
 // Create a new database.
@@ -13,6 +15,8 @@ use(database);
 db.genreCollection.drop();
 db.movieCollection.drop();
 db.personCollection.drop();
+db.actorCollection.drop();
+db.directorCollection.drop();
 
 db.createCollection(genreCollection, {
   validator: {$jsonSchema: {
@@ -52,22 +56,73 @@ db.createCollection(personCollection, {
         bsonType: "date",
         description: "must be a date and is required"
       },
-      isA: {
-        enum: ["actor", "director"],
-        description: "can only be one of the enum values and is required"
-      }
     }  
   }}
 });
 
 
+db.createCollection(actorCollection, {
+    validator: {$jsonSchema: {
+        bsonType: "object",
+        required: ["idPerson", "idActor"],
+        properties: {
+            idPerson: {
+                bsonType: "number",
+                description: "must be an integer and is required"
+            },
+            idActor: {
+                bsonType: "number",
+                description: "must be an integer and is required"
+            },
+            role: {
+                bsonType: "string",
+                description: "must be a string"
+            },
+            movies: {
+                bsonType: "array",
+                description: "must be an array of movie",
+                items: {
+                    bsonType: "object",
+                    required: ["movieId", "title"],
+                    properties: {
+                        movieId: {
+                            bsonType: "number",
+                            description: "must be an integer and is required"
+                        },
+                        title: {
+                            bsonType: "string",
+                            description: "must be a string and is required"
+                        }
+                    }
+                }
+            }
+        }
+    }}
+});
+
+db.createCollection(directorCollection, {
+    validator: {$jsonSchema: {
+     bsonType: "object",
+     required: ["idPerson", "idDirector"],
+     properties: {
+        idPerson: {
+            bsonType: "number",
+            description: "must be an integer and is required"
+        },
+        idDirector: {
+            bsonType: "number",
+            description: "must be an integer and is required"
+        },
+     }   
+    }}
+});
 
 
 // Create a new collection.
 db.createCollection(movieCollection, {
   validator: {$jsonSchema: {
     bsonType: "object",
-    required: ["idFilm", "title", "year", "summary", "genre", "director", "actors"],
+    required: ["idFilm", "title", "year", "country", "summary", "genre", "director", "actors"],
     properties: {
       idFilm: {
         bsonType: "number",
@@ -80,6 +135,10 @@ db.createCollection(movieCollection, {
       year: {
         bsonType: "number",
         description: "must be a date and is required"
+      },
+      country: {
+        bsonType: "string",
+        description: "must be a string and is required"
       },
       summary: {
         bsonType: "string",
@@ -95,10 +154,20 @@ db.createCollection(movieCollection, {
       },
       actors: {
         bsonType: "array",
-        description: "must be an array of personId and is required",
+        description: "must be an array of Actor and is required",
         items: {
-          bsonType: "number",
-          description: "must be a personId and is requred"
+          bsonType: "object",
+          required: ["actorId", "name"],
+          properties: {
+            actorId: {
+                bsonType: "number",
+                description: "must be an integer and is required"
+            },
+            name: {
+                bsonType: "string",
+                description: "must be a string and is required"
+            }
+          }
         }
       },
     }  
@@ -106,3 +175,4 @@ db.createCollection(movieCollection, {
 });
 
 
+// insert data
