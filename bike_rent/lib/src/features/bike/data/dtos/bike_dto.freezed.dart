@@ -22,8 +22,8 @@ BikeDTO _$BikeDTOFromJson(Map<String, dynamic> json) {
 mixin _$BikeDTO {
   int get id => throw _privateConstructorUsedError;
   String get model => throw _privateConstructorUsedError;
-  List<ScoreDTO> get scores => throw _privateConstructorUsedError;
-  UserDTO get owner => throw _privateConstructorUsedError;
+  List<ScoreDTO>? get scores => throw _privateConstructorUsedError;
+  UserDTO? get owner => throw _privateConstructorUsedError;
   int? get sellPrice => throw _privateConstructorUsedError;
   int? get rentPrice => throw _privateConstructorUsedError;
 
@@ -40,12 +40,12 @@ abstract class $BikeDTOCopyWith<$Res> {
   $Res call(
       {int id,
       String model,
-      List<ScoreDTO> scores,
-      UserDTO owner,
+      List<ScoreDTO>? scores,
+      UserDTO? owner,
       int? sellPrice,
       int? rentPrice});
 
-  $UserDTOCopyWith<$Res> get owner;
+  $UserDTOCopyWith<$Res>? get owner;
 }
 
 /// @nodoc
@@ -63,8 +63,8 @@ class _$BikeDTOCopyWithImpl<$Res, $Val extends BikeDTO>
   $Res call({
     Object? id = null,
     Object? model = null,
-    Object? scores = null,
-    Object? owner = null,
+    Object? scores = freezed,
+    Object? owner = freezed,
     Object? sellPrice = freezed,
     Object? rentPrice = freezed,
   }) {
@@ -77,14 +77,14 @@ class _$BikeDTOCopyWithImpl<$Res, $Val extends BikeDTO>
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
               as String,
-      scores: null == scores
+      scores: freezed == scores
           ? _value.scores
           : scores // ignore: cast_nullable_to_non_nullable
-              as List<ScoreDTO>,
-      owner: null == owner
+              as List<ScoreDTO>?,
+      owner: freezed == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserDTO,
+              as UserDTO?,
       sellPrice: freezed == sellPrice
           ? _value.sellPrice
           : sellPrice // ignore: cast_nullable_to_non_nullable
@@ -98,8 +98,12 @@ class _$BikeDTOCopyWithImpl<$Res, $Val extends BikeDTO>
 
   @override
   @pragma('vm:prefer-inline')
-  $UserDTOCopyWith<$Res> get owner {
-    return $UserDTOCopyWith<$Res>(_value.owner, (value) {
+  $UserDTOCopyWith<$Res>? get owner {
+    if (_value.owner == null) {
+      return null;
+    }
+
+    return $UserDTOCopyWith<$Res>(_value.owner!, (value) {
       return _then(_value.copyWith(owner: value) as $Val);
     });
   }
@@ -115,13 +119,13 @@ abstract class _$$_BikeDTOCopyWith<$Res> implements $BikeDTOCopyWith<$Res> {
   $Res call(
       {int id,
       String model,
-      List<ScoreDTO> scores,
-      UserDTO owner,
+      List<ScoreDTO>? scores,
+      UserDTO? owner,
       int? sellPrice,
       int? rentPrice});
 
   @override
-  $UserDTOCopyWith<$Res> get owner;
+  $UserDTOCopyWith<$Res>? get owner;
 }
 
 /// @nodoc
@@ -136,8 +140,8 @@ class __$$_BikeDTOCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? model = null,
-    Object? scores = null,
-    Object? owner = null,
+    Object? scores = freezed,
+    Object? owner = freezed,
     Object? sellPrice = freezed,
     Object? rentPrice = freezed,
   }) {
@@ -150,14 +154,14 @@ class __$$_BikeDTOCopyWithImpl<$Res>
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
               as String,
-      scores: null == scores
+      scores: freezed == scores
           ? _value._scores
           : scores // ignore: cast_nullable_to_non_nullable
-              as List<ScoreDTO>,
-      owner: null == owner
+              as List<ScoreDTO>?,
+      owner: freezed == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserDTO,
+              as UserDTO?,
       sellPrice: freezed == sellPrice
           ? _value.sellPrice
           : sellPrice // ignore: cast_nullable_to_non_nullable
@@ -176,7 +180,7 @@ class _$_BikeDTO extends _BikeDTO {
   _$_BikeDTO(
       {required this.id,
       required this.model,
-      required final List<ScoreDTO> scores,
+      required final List<ScoreDTO>? scores,
       required this.owner,
       required this.sellPrice,
       required this.rentPrice})
@@ -190,15 +194,17 @@ class _$_BikeDTO extends _BikeDTO {
   final int id;
   @override
   final String model;
-  final List<ScoreDTO> _scores;
+  final List<ScoreDTO>? _scores;
   @override
-  List<ScoreDTO> get scores {
+  List<ScoreDTO>? get scores {
+    final value = _scores;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_scores);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final UserDTO owner;
+  final UserDTO? owner;
   @override
   final int? sellPrice;
   @override
@@ -253,8 +259,8 @@ abstract class _BikeDTO extends BikeDTO {
   factory _BikeDTO(
       {required final int id,
       required final String model,
-      required final List<ScoreDTO> scores,
-      required final UserDTO owner,
+      required final List<ScoreDTO>? scores,
+      required final UserDTO? owner,
       required final int? sellPrice,
       required final int? rentPrice}) = _$_BikeDTO;
   _BikeDTO._() : super._();
@@ -266,9 +272,9 @@ abstract class _BikeDTO extends BikeDTO {
   @override
   String get model;
   @override
-  List<ScoreDTO> get scores;
+  List<ScoreDTO>? get scores;
   @override
-  UserDTO get owner;
+  UserDTO? get owner;
   @override
   int? get sellPrice;
   @override

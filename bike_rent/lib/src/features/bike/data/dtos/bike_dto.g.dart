@@ -9,10 +9,12 @@ part of 'bike_dto.dart';
 _$_BikeDTO _$$_BikeDTOFromJson(Map<String, dynamic> json) => _$_BikeDTO(
       id: json['id'] as int,
       model: json['model'] as String,
-      scores: (json['scores'] as List<dynamic>)
-          .map((e) => ScoreDTO.fromJson(e as Map<String, dynamic>))
+      scores: (json['scores'] as List<dynamic>?)
+          ?.map((e) => ScoreDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      owner: UserDTO.fromJson(json['owner'] as Map<String, dynamic>),
+      owner: json['owner'] == null
+          ? null
+          : UserDTO.fromJson(json['owner'] as Map<String, dynamic>),
       sellPrice: json['sellPrice'] as int?,
       rentPrice: json['rentPrice'] as int?,
     );

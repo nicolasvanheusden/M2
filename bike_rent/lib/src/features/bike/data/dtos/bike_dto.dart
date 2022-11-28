@@ -3,6 +3,8 @@
 import 'package:bike_rent/src/features/bike/domain/bike.dart';
 import 'package:bike_rent/src/features/score/data/dtos/score_dto.dart';
 import 'package:bike_rent/src/features/user/data/dtos/user_dto.dart';
+import 'package:bike_rent/src/features/user/domain/user.dart';
+import 'package:bike_rent/src/features/user/domain/user_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'bike_dto.freezed.dart';
@@ -14,8 +16,8 @@ class BikeDTO with _$BikeDTO {
   factory BikeDTO({
     required final int id,
     required final String model,
-    required final List<ScoreDTO> scores,
-    required final UserDTO owner,
+    required final List<ScoreDTO>? scores,
+    required final UserDTO? owner,
     required final int? sellPrice,
     required final int? rentPrice,
   }) = _BikeDTO;
@@ -26,8 +28,8 @@ class BikeDTO with _$BikeDTO {
   Bike toDomain() => Bike(
     id: id,
     model: model,
-    scores: scores.map((e) => e.toDomain()).toList(),
-    owner: owner.toDomain(),
+    scores: scores?.map((e) => e.toDomain()).toList() ?? [],
+    owner: owner?.toDomain() ?? User(id: 0, name: "Marco", type: UserType.ownerParticular),
     sellPrice: sellPrice,
     rentPrice: rentPrice,
   );

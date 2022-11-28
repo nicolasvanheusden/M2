@@ -13,19 +13,20 @@ class ShopCartButton extends StatelessWidget {
         return Stack(
           children: [
             IconButton(
-              onPressed: () {}, // todo(nico): navigate to shop cart screen
+              onPressed: () => Scaffold.of(context).openEndDrawer(), // todo(nico): navigate to shop cart screen
               icon: Icon(
                 Icons.shopping_bag_rounded,
                 color: widgetButtonColor,
                 size: 30,
               )
             ),
+            if (state.bikesToBuy.isNotEmpty)             
             Positioned(
-              right: 0.5,
-              top: 0.1,
+              right: 2,
+              top: 10,
               child: Container(
-                width: 20,
-                height: 20,
+                width: 15,
+                height: 15,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: backgroundScaffoldColor,
@@ -34,8 +35,9 @@ class ShopCartButton extends StatelessWidget {
                 child: Text(
                   state.bikesToBuy.length.toString(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: textColor,
+                  style: const TextStyle(
+                    fontSize: 7,
+                    color: Colors.white,
                   ),
                 ),
               ),

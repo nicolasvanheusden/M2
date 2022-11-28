@@ -16,23 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ShopCartEvent {
-  Bike get bike => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Bike bike) addBike,
     required TResult Function(Bike bike) removeBike,
+    required TResult Function() fetchBike,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Bike bike)? addBike,
     TResult? Function(Bike bike)? removeBike,
+    TResult? Function()? fetchBike,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Bike bike)? addBike,
     TResult Function(Bike bike)? removeBike,
+    TResult Function()? fetchBike,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -40,24 +42,23 @@ mixin _$ShopCartEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddBike value) addBike,
     required TResult Function(_RemoveBike value) removeBike,
+    required TResult Function(_FetchBike value) fetchBike,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddBike value)? addBike,
     TResult? Function(_RemoveBike value)? removeBike,
+    TResult? Function(_FetchBike value)? fetchBike,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddBike value)? addBike,
     TResult Function(_RemoveBike value)? removeBike,
+    TResult Function(_FetchBike value)? fetchBike,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ShopCartEventCopyWith<ShopCartEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -66,10 +67,6 @@ abstract class $ShopCartEventCopyWith<$Res> {
   factory $ShopCartEventCopyWith(
           ShopCartEvent value, $Res Function(ShopCartEvent) then) =
       _$ShopCartEventCopyWithImpl<$Res, ShopCartEvent>;
-  @useResult
-  $Res call({Bike bike});
-
-  $BikeCopyWith<$Res> get bike;
 }
 
 /// @nodoc
@@ -81,40 +78,16 @@ class _$ShopCartEventCopyWithImpl<$Res, $Val extends ShopCartEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bike = null,
-  }) {
-    return _then(_value.copyWith(
-      bike: null == bike
-          ? _value.bike
-          : bike // ignore: cast_nullable_to_non_nullable
-              as Bike,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $BikeCopyWith<$Res> get bike {
-    return $BikeCopyWith<$Res>(_value.bike, (value) {
-      return _then(_value.copyWith(bike: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_AddBikeCopyWith<$Res>
-    implements $ShopCartEventCopyWith<$Res> {
+abstract class _$$_AddBikeCopyWith<$Res> {
   factory _$$_AddBikeCopyWith(
           _$_AddBike value, $Res Function(_$_AddBike) then) =
       __$$_AddBikeCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({Bike bike});
 
-  @override
   $BikeCopyWith<$Res> get bike;
 }
 
@@ -136,6 +109,14 @@ class __$$_AddBikeCopyWithImpl<$Res>
           : bike // ignore: cast_nullable_to_non_nullable
               as Bike,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BikeCopyWith<$Res> get bike {
+    return $BikeCopyWith<$Res>(_value.bike, (value) {
+      return _then(_value.copyWith(bike: value));
+    });
   }
 }
 
@@ -174,6 +155,7 @@ class _$_AddBike implements _AddBike {
   TResult when<TResult extends Object?>({
     required TResult Function(Bike bike) addBike,
     required TResult Function(Bike bike) removeBike,
+    required TResult Function() fetchBike,
   }) {
     return addBike(bike);
   }
@@ -183,6 +165,7 @@ class _$_AddBike implements _AddBike {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Bike bike)? addBike,
     TResult? Function(Bike bike)? removeBike,
+    TResult? Function()? fetchBike,
   }) {
     return addBike?.call(bike);
   }
@@ -192,6 +175,7 @@ class _$_AddBike implements _AddBike {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Bike bike)? addBike,
     TResult Function(Bike bike)? removeBike,
+    TResult Function()? fetchBike,
     required TResult orElse(),
   }) {
     if (addBike != null) {
@@ -205,6 +189,7 @@ class _$_AddBike implements _AddBike {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddBike value) addBike,
     required TResult Function(_RemoveBike value) removeBike,
+    required TResult Function(_FetchBike value) fetchBike,
   }) {
     return addBike(this);
   }
@@ -214,6 +199,7 @@ class _$_AddBike implements _AddBike {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddBike value)? addBike,
     TResult? Function(_RemoveBike value)? removeBike,
+    TResult? Function(_FetchBike value)? fetchBike,
   }) {
     return addBike?.call(this);
   }
@@ -223,6 +209,7 @@ class _$_AddBike implements _AddBike {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddBike value)? addBike,
     TResult Function(_RemoveBike value)? removeBike,
+    TResult Function(_FetchBike value)? fetchBike,
     required TResult orElse(),
   }) {
     if (addBike != null) {
@@ -235,25 +222,20 @@ class _$_AddBike implements _AddBike {
 abstract class _AddBike implements ShopCartEvent {
   const factory _AddBike(final Bike bike) = _$_AddBike;
 
-  @override
   Bike get bike;
-  @override
   @JsonKey(ignore: true)
   _$$_AddBikeCopyWith<_$_AddBike> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_RemoveBikeCopyWith<$Res>
-    implements $ShopCartEventCopyWith<$Res> {
+abstract class _$$_RemoveBikeCopyWith<$Res> {
   factory _$$_RemoveBikeCopyWith(
           _$_RemoveBike value, $Res Function(_$_RemoveBike) then) =
       __$$_RemoveBikeCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({Bike bike});
 
-  @override
   $BikeCopyWith<$Res> get bike;
 }
 
@@ -276,6 +258,14 @@ class __$$_RemoveBikeCopyWithImpl<$Res>
           : bike // ignore: cast_nullable_to_non_nullable
               as Bike,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BikeCopyWith<$Res> get bike {
+    return $BikeCopyWith<$Res>(_value.bike, (value) {
+      return _then(_value.copyWith(bike: value));
+    });
   }
 }
 
@@ -314,6 +304,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult when<TResult extends Object?>({
     required TResult Function(Bike bike) addBike,
     required TResult Function(Bike bike) removeBike,
+    required TResult Function() fetchBike,
   }) {
     return removeBike(bike);
   }
@@ -323,6 +314,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Bike bike)? addBike,
     TResult? Function(Bike bike)? removeBike,
+    TResult? Function()? fetchBike,
   }) {
     return removeBike?.call(bike);
   }
@@ -332,6 +324,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Bike bike)? addBike,
     TResult Function(Bike bike)? removeBike,
+    TResult Function()? fetchBike,
     required TResult orElse(),
   }) {
     if (removeBike != null) {
@@ -345,6 +338,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddBike value) addBike,
     required TResult Function(_RemoveBike value) removeBike,
+    required TResult Function(_FetchBike value) fetchBike,
   }) {
     return removeBike(this);
   }
@@ -354,6 +348,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddBike value)? addBike,
     TResult? Function(_RemoveBike value)? removeBike,
+    TResult? Function(_FetchBike value)? fetchBike,
   }) {
     return removeBike?.call(this);
   }
@@ -363,6 +358,7 @@ class _$_RemoveBike implements _RemoveBike {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddBike value)? addBike,
     TResult Function(_RemoveBike value)? removeBike,
+    TResult Function(_FetchBike value)? fetchBike,
     required TResult orElse(),
   }) {
     if (removeBike != null) {
@@ -375,12 +371,118 @@ class _$_RemoveBike implements _RemoveBike {
 abstract class _RemoveBike implements ShopCartEvent {
   const factory _RemoveBike(final Bike bike) = _$_RemoveBike;
 
-  @override
   Bike get bike;
-  @override
   @JsonKey(ignore: true)
   _$$_RemoveBikeCopyWith<_$_RemoveBike> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_FetchBikeCopyWith<$Res> {
+  factory _$$_FetchBikeCopyWith(
+          _$_FetchBike value, $Res Function(_$_FetchBike) then) =
+      __$$_FetchBikeCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_FetchBikeCopyWithImpl<$Res>
+    extends _$ShopCartEventCopyWithImpl<$Res, _$_FetchBike>
+    implements _$$_FetchBikeCopyWith<$Res> {
+  __$$_FetchBikeCopyWithImpl(
+      _$_FetchBike _value, $Res Function(_$_FetchBike) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_FetchBike implements _FetchBike {
+  const _$_FetchBike();
+
+  @override
+  String toString() {
+    return 'ShopCartEvent.fetchBike()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_FetchBike);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Bike bike) addBike,
+    required TResult Function(Bike bike) removeBike,
+    required TResult Function() fetchBike,
+  }) {
+    return fetchBike();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Bike bike)? addBike,
+    TResult? Function(Bike bike)? removeBike,
+    TResult? Function()? fetchBike,
+  }) {
+    return fetchBike?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Bike bike)? addBike,
+    TResult Function(Bike bike)? removeBike,
+    TResult Function()? fetchBike,
+    required TResult orElse(),
+  }) {
+    if (fetchBike != null) {
+      return fetchBike();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AddBike value) addBike,
+    required TResult Function(_RemoveBike value) removeBike,
+    required TResult Function(_FetchBike value) fetchBike,
+  }) {
+    return fetchBike(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AddBike value)? addBike,
+    TResult? Function(_RemoveBike value)? removeBike,
+    TResult? Function(_FetchBike value)? fetchBike,
+  }) {
+    return fetchBike?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AddBike value)? addBike,
+    TResult Function(_RemoveBike value)? removeBike,
+    TResult Function(_FetchBike value)? fetchBike,
+    required TResult orElse(),
+  }) {
+    if (fetchBike != null) {
+      return fetchBike(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchBike implements ShopCartEvent {
+  const factory _FetchBike() = _$_FetchBike;
 }
 
 /// @nodoc
