@@ -3,6 +3,7 @@
 import 'package:bike_rent/src/features/bike/data/datasources/bike_remote_source.dart';
 import 'package:bike_rent/src/features/bike/data/repositories/i_bike_repository.dart';
 import 'package:bike_rent/src/features/bike/domain/bike.dart';
+import 'package:bike_rent/src/features/user/domain/user.dart';
 
 class BikeLocalhostRepository extends IBikeRepository {
 
@@ -33,6 +34,11 @@ class BikeLocalhostRepository extends IBikeRepository {
           // .where((element) => element.sellPrice != null)
           .toList()
       );  
+  }
+
+  @override
+  Future<bool> sellABike(String name, User owner, int price) {
+    return _bikeRemoteSource.addABikeToSell(name, owner, price);
   }
 
 }

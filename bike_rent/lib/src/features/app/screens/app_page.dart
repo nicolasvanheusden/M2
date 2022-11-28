@@ -11,7 +11,9 @@ class AppPage extends StatelessWidget {
     return MaterialApp(
       title: 'BlaBlaBike',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: ThemeData.light(
+        useMaterial3: true
+      ),
       home: const HomePage()
       
     );

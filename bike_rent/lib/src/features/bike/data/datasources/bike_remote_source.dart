@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:bike_rent/src/features/bike/data/dtos/bike_dto.dart';
+import 'package:bike_rent/src/features/user/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -24,13 +25,33 @@ class BikeRemoteSource {
 
     if (response.statusCode == 200) {
       var input = await response.stream.bytesToString();
+      if (input.isEmpty) return [];
       var body = jsonDecode(input) as List<dynamic>;
       return body.map((e) => BikeDTO.fromJson(e)).toList();
     }
-    else {
-      print(response.reasonPhrase);
-    }
+    
+    print(response.reasonPhrase);
+    
     return [];
+  }
+
+  Future<bool> addABikeToSell(String name, User owner, int price) async {
+    var request = http.Request(
+      'PUT',
+      Uri.parse('http://localhost:8081/sellBike?model=$name&price=$price'),      
+    );
+    request.headers.addAll( {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Accept': '*/*'
+    });
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    print(response.reasonPhrase);
+    return false;
   }
 
 }

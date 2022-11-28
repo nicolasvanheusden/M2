@@ -18,5 +18,14 @@ class BuyBikeBloc extends Bloc<BuyBikeEvent, BuyBikeState> {
       final bikes = await _repository.getSellBikes();
       emit(BuyBikeState.success(bikes));
     });
+
+    on<_SellABike>((event, emit) async {
+      
+      final success = await _repository.sellABike(event.name, event.owner, event.price);
+      print(success);
+      if (success) {
+        add(const _FetchBuyBikes());
+      }
+    });
   }
 }
