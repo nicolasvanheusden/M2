@@ -6,16 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tp5" />
-        <module name="tp4" />
         <module name="tp6" />
-        <module name="tp3" />
-        <module name="tp2" />
+        <module name="spring-mvc" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-mvc" options="-parameters" />
       <module name="tp4" options="-parameters" />
       <module name="tp5" options="-parameters" />
     </option>

@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.uge.tp4.ui.theme.TP4Theme
 import java.util.stream.Collector
 import java.util.stream.Collectors
+import kotlin.math.cos
+import kotlin.streams.toList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TownDisplayer(towns: Set<Town>) {
-    val MAP_BOUNDS = RectF(-5.6126f /* min longitude */,
+    val mapBounds = RectF(-5.6126f /* min longitude */,
         51.8073f /* max latitude */,
         8.3117f /* max longitude */,
         41.3509f /* min latitude */)
@@ -64,6 +66,21 @@ fun TownDisplayer(towns: Set<Town>) {
                     (size.height-bitmap.height) / 2f
                 )
             )
+            towns
+                .filter { it.zipcode.toInt() <= 96000 && !it.zipcode.startsWith("20") }
+                .forEach {
+                drawCircle(
+                    color = Color.Black,
+                    radius = 1F,
+                    center = Offset(
+                        x = (bitmap.width + (size.width-bitmap.width) / 2f) * (it.longitude - mapBounds.left) / (mapBounds.right - mapBounds.left),
+                        y =  bitmap.height * (1f - (it.latitude - mapBounds.bottom) / (mapBounds.top - mapBounds.bottom)) + (size.height-bitmap.height) / 2f + (mapBounds.centerY() / 6f)
+                    )
+                )
+
+            }
+
+
     })
 }
 
@@ -71,6 +88,5 @@ fun TownDisplayer(towns: Set<Town>) {
 @Composable
 fun DefaultPreview() {
     TP4Theme {
-
     }
 }

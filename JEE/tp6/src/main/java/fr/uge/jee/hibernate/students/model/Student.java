@@ -20,7 +20,7 @@ public class Student {
     @JoinColumn(name = "Student_Id")
     private List<Comment> comments;
     @OneToMany
-    @JoinColumn(name="Students_PhoneNumbers",
+    @JoinTable(name="Students_PhoneNumbers",
         joinColumns=@JoinColumn(name="Student_Id"),
         inverseJoinColumns=@JoinColumn(name="Lecture_Id"))
     private Set<Lecture> lectures;
