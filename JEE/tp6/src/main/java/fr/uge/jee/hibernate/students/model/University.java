@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Universities")
-@Embeddable
 public class University {
 
     @Id

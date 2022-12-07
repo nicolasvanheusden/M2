@@ -6,35 +6,35 @@ import fr.uge.jee.hibernate.utils.PersistenceUtils;
 
 import javax.persistence.EntityManagerFactory;
 
-public class UniversityRepository {
+public class CommentRepository {
+
     private final EntityManagerFactory entityManagerFactory = PersistenceUtils.getEntityManagerFactory();
 
-
     /**
-     * Create a university with the given information
-     * @param name university's name
+     * Create a comment with the given information
+     * @param message comment message
      * @return the id of the newly created employee
      */
-    public long create(String name) {
+    public long create(String message) {
         return PersistenceUtils.inTransaction((em) -> {
-            var university = new University(name);
-            em.persist(university);
-            return university.getId();
+            var comment = new Comment(message);
+            em.persist(comment);
+            return comment.getId();
         });
     }
 
     /**
-     * Remove the university with the given id from the DB
+     * Remove the comment with the given id from the DB
      * @param id
      * @return true if the removal was successful
      */
     public boolean delete(long id) {
         return PersistenceUtils.inTransaction((em) -> {
-            var university = em.find(University.class, id);
-            if (university == null) {
+            var comment = em.find(University.class, id);
+            if (comment == null) {
                 return false;
             }
-            em.remove(university);
+            em.remove(comment);
             return true;
         });
     }

@@ -12,17 +12,17 @@ public class Student {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String lastName;
+
+    private String firstName;
     @Embedded
     private Address address;
-    @Embedded
+    @OneToOne
     private University university;
     @OneToMany
-    @JoinColumn(name = "Student_Id")
     private List<Comment> comments;
-    @OneToMany
-    @JoinTable(name="Students_PhoneNumbers",
-        joinColumns=@JoinColumn(name="Student_Id"),
-        inverseJoinColumns=@JoinColumn(name="Lecture_Id"))
+    @ManyToMany
     private Set<Lecture> lectures;
 
 
@@ -66,7 +66,27 @@ public class Student {
         this.lectures = lectures;
     }
 
-    public Student(Address address, University university, List<Comment> comments, Set<Lecture> lectures) {
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Student setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public Student setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public Student(String lastName, String firstName, Address address, University university, List<Comment> comments, Set<Lecture> lectures) {
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.address = address;
         this.university = university;
         this.comments = List.copyOf(comments);

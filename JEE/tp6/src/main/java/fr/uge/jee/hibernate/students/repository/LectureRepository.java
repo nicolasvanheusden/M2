@@ -2,9 +2,11 @@ package fr.uge.jee.hibernate.students.repository;
 
 import fr.uge.jee.hibernate.employees.Employee;
 import fr.uge.jee.hibernate.students.model.Lecture;
+import fr.uge.jee.hibernate.students.model.Student;
 import fr.uge.jee.hibernate.utils.PersistenceUtils;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 
 public class LectureRepository {
 
@@ -36,6 +38,15 @@ public class LectureRepository {
             }
             em.remove(lecture);
             return true;
+        });
+    }
+
+    public List<Student> getStudentsFromLecture(long id) {
+        return PersistenceUtils.inTransaction((em) -> {
+            var q = "SELECT s FROM Student s left join fetch s.lectures where :id in (select l.id from s.lectures l)";
+            var query = em.createQuery(q,Student.class);
+            query.setParameter("id",id);
+            return query.getResultList();
         });
     }
 }
