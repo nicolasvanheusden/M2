@@ -1,10 +1,7 @@
 package fr.uge.jee.hibernate.students.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Comments")
@@ -15,6 +12,9 @@ public class Comment {
     private Long id;
 
     private String message;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
 
     public Comment() {
     }
@@ -37,5 +37,14 @@ public class Comment {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+
     }
 }

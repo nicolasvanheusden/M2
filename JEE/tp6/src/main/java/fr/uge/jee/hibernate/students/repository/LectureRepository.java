@@ -1,6 +1,5 @@
 package fr.uge.jee.hibernate.students.repository;
 
-import fr.uge.jee.hibernate.employees.Employee;
 import fr.uge.jee.hibernate.students.model.Lecture;
 import fr.uge.jee.hibernate.students.model.Student;
 import fr.uge.jee.hibernate.utils.PersistenceUtils;

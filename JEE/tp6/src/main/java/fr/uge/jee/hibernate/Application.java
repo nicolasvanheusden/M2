@@ -1,8 +1,6 @@
 package fr.uge.jee.hibernate;
 
-import fr.uge.jee.hibernate.employees.EmployeeRepository;
 import fr.uge.jee.hibernate.students.model.Address;
-import fr.uge.jee.hibernate.students.model.Comment;
 import fr.uge.jee.hibernate.students.model.Lecture;
 import fr.uge.jee.hibernate.students.model.Student;
 import fr.uge.jee.hibernate.students.repository.CommentRepository;
@@ -10,9 +8,6 @@ import fr.uge.jee.hibernate.students.repository.LectureRepository;
 import fr.uge.jee.hibernate.students.repository.StudentRepository;
 import fr.uge.jee.hibernate.students.repository.UniversityRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.Collections;
 
 public class Application {

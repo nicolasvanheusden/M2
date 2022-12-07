@@ -18,9 +18,9 @@ public class Student {
     private String firstName;
     @Embedded
     private Address address;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private University university;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="student")
     private List<Comment> comments;
     @ManyToMany
     private Set<Lecture> lectures;
@@ -48,6 +48,7 @@ public class Student {
 
     public void setUniversity(University university) {
         this.university = university;
+        university.addStudent(this);
     }
 
     public List<Comment> getComments() {
@@ -98,17 +99,33 @@ public class Student {
 
     public void addLecture(Lecture lecture) {
         Objects.requireNonNull(lecture);
-        lectures.add(lecture);
+        if (!lectures.contains(lecture)) {
+            lectures.add(lecture);
+            lecture.addStudent(this);
+        }
+
+    }
+
+    public void removeLecture(Lecture lecture) {
+        Objects.requireNonNull(lecture);
+        if (lectures.contains(lecture)) {
+            lecture.removeStudent(this);
+            lectures.remove(lecture);
+        }
+
+
     }
 
     public void addComment(Comment comment) {
         Objects.requireNonNull(comment);
         comments.add(comment);
+        comment.setStudent(this);
     }
 
     public void removeComment(Comment comment) {
         Objects.requireNonNull(comment);
         comments.remove(comment);
+        comment.setStudent(null);
     }
 
 
