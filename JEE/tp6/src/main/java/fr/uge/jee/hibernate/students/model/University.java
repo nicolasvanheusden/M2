@@ -49,7 +49,7 @@ public class University {
             students.add(student);
             student.setUniversity(this);
         }
-        
+
     }
 
     public void removeStudent(Student student) {

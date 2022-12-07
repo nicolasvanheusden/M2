@@ -7,6 +7,8 @@ import fr.uge.jee.hibernate.students.repository.CommentRepository;
 import fr.uge.jee.hibernate.students.repository.LectureRepository;
 import fr.uge.jee.hibernate.students.repository.StudentRepository;
 import fr.uge.jee.hibernate.students.repository.UniversityRepository;
+import fr.uge.jee.hibernate.votes.repository.UserRepository;
+import fr.uge.jee.hibernate.votes.repository.VideoRepository;
 
 import java.util.Collections;
 
@@ -33,6 +35,7 @@ public class Application {
 
         System.out.println(repository.getAllByFirstName("Bob"));*/
 
+        /*
         var studentRepository = new StudentRepository();
         var universityRepository = new UniversityRepository();
         var lectureRepository = new LectureRepository();
@@ -90,8 +93,22 @@ public class Application {
         lectureRepository.getStudentsFromLecture(lectureOneId).forEach(student -> System.out.println(student.getId()));
 
         // Get lectures for a student
-        System.out.println(studentRepository.getLectureFromStudent(studentTwoId));
+        System.out.println(studentRepository.getLectureFromStudent(studentTwoId));*/
 
 
+        var userRepository = new UserRepository();
+        var videoRepository = new VideoRepository();
+
+        var id1 = videoRepository.create("film incroyable");
+        var id2 = videoRepository.create("film null");
+        var id3 = videoRepository.create("film merdique");
+
+        var userId = userRepository.create("nico");
+        var user2Id = userRepository.create("marc");
+
+        videoRepository.upVote(id1, userRepository.get(userId).orElseThrow());
+
+        videoRepository.downVote(id3, userRepository.get(userId).orElseThrow());
+        videoRepository.downVote(id3, userRepository.get(user2Id).orElseThrow());
     }
 }

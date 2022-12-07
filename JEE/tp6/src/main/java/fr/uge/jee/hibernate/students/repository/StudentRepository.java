@@ -133,7 +133,7 @@ public class StudentRepository {
     /**
      * Remove a Student's comment
      * @param studentId
-     * @param comment the comment
+     * @param message the comment's message
      * @return commentId if the adding was successful
      */
     public long addComment(long studentId, String message) {
