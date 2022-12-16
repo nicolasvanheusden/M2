@@ -7,8 +7,6 @@ import javax.persistence.*;
 public class Pokemon {
 
     @Id
-    @GeneratedValue
-    private Long id;
     private String name;
     private int score;
 
@@ -18,14 +16,6 @@ public class Pokemon {
     public Pokemon(String name, int score) {
         this.name = name;
         this.score = score;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

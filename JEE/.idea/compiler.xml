@@ -8,10 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="tp7" />
         <module name="tp6" />
+        <module name="spring-mvc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="spring-mvc" target="11" />
+      <module name="tp2" target="11" />
+      <module name="tp3" target="11" />
+      <module name="tp4" target="11" />
+      <module name="tp5" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
