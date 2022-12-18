@@ -25,7 +25,7 @@ public class PokemonService {
 
     @Transactional
     public void insertOrIncrementPokemon(String name) {
-        var pokemonToUpdate= em.find(Pokemon.class,name, LockModeType.PESSIMISTIC_WRITE);
+        var pokemonToUpdate= em.find(Pokemon.class, name, LockModeType.PESSIMISTIC_WRITE);
         pokemonToUpdate.setScore(pokemonToUpdate.getScore()+1);
     }
 
