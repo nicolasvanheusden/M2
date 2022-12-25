@@ -2,8 +2,9 @@ package com.uge.tp4
 
 import android.content.Context
 import android.graphics.RectF
-import java.io.InputStream
-import java.util.zip.GZIPInputStream
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.lang.Math.random
 import kotlin.math.*
 
 data class Town(val name: String, val latitude: Float, val longitude: Float, val zipcode: String) {
@@ -64,3 +65,78 @@ fun Collection<Town>.computeRectBounds(): RectF {
     val maxLon = this.maxOf { it.longitude }
     return RectF(minLon, maxLat, maxLon, minLat)
 }
+
+
+fun List<Town>.circuitDistance() : Double {
+    return this.mapIndexed { index, town ->
+        val nextIndex = if (index + 1 >= this.size) 0 else (index+1)
+        val nextTown = this.get(nextIndex)
+        haversine(
+            town.latitude.toDouble(),
+            town.longitude.toDouble(),
+            nextTown.latitude.toDouble(),
+            nextTown.longitude.toDouble()
+        )
+    }.sum()
+}
+
+/* swap two elements in a list */
+fun <T> MutableList<T>.swap(a: Int, b: Int) {
+    val tmp = this[a]
+    this[a] = this[b]
+    this[b] = tmp
+}
+
+data class SimulatedAnnealingParams(
+    val startTemperature: Double = 1.0,
+    val temperatureDecreaseRatio: Double
+)
+
+fun computeWithSimulatedAnnealing(initialCircuit: List<Town>, iterations: Long, params: SimulatedAnnealingParams): List<Town> {
+    val currentCircuit = mutableListOf<Town>().apply { addAll(initialCircuit) }
+    var currentDistance = currentCircuit.circuitDistance()
+    var currentTemperature = params.startTemperature
+
+    fun acceptChange(deltaDistance: Double): Boolean {
+        if (deltaDistance < 0) return true
+        val v = exp(-deltaDistance / currentDistance / currentTemperature)
+        return random() < v
+    }
+
+
+    for (i in 0 until iterations) {
+        // pick two random points in the circuit and swap them
+        val a = currentCircuit.indices.random()
+        val b = currentCircuit.indices.random()
+        if (a != b) {
+            currentCircuit.swap(a, b)
+            val newDistance = currentCircuit.circuitDistance() // could be optimized
+            if (acceptChange(newDistance - currentDistance)) {
+                currentDistance = newDistance
+            } else {
+                // we cancel the swap
+                currentCircuit.swap(a, b)
+            }
+            // we decrement the temperature
+            currentTemperature *= (1.0 - params.temperatureDecreaseRatio)
+        }
+    }
+
+    return currentCircuit
+}
+
+fun getLongFlow(): Flow<Long> = flow<Long> {
+    // we are in a coroutine
+    var i = 0L
+    while (true) {
+        emit(i)
+        i++
+    }
+}
+
+
+
+
+sealed interface TownListLoading
+data class TownListProgress(val init: Boolean = true): TownListLoading
+data class TownListResult(val townList: List<Town>): TownListLoading

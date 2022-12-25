@@ -1,5 +1,7 @@
+
 package com.uge.tp4
 
+import android.content.Context
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Bundle
@@ -21,13 +23,18 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.uge.tp4.ui.theme.TP4Theme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.util.stream.Collectors
 import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val towns = Town.parseFile(this, "laposte_hexasmal.csv").stream().collect(Collectors.toSet())
+
         setContent {
             TP4Theme {
                 // A surface container using the 'background' color from the theme
@@ -38,12 +45,64 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TownManager(allTowns = towns.toList())
+                    displayLoadingMap(context = this)
+                    
                 }
             }
         }
     }
 }
+
+fun getTownListFlow(context: Context): Flow<TownListLoading> = flow<TownListLoading> {
+    emit(TownListProgress())
+    val towns = Town.parseFile(context, "laposte_hexasmal.csv").stream().collect(Collectors.toSet()).toList()
+    emit(TownListResult(towns))
+
+}
+
+@Composable
+fun displayLoadingMap(context: Context) {
+
+    val townList = remember { mutableStateListOf<Town>() }
+    var loading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(loading) {
+        while (loading) {
+            getTownListFlow(context = context).flowOn(Dispatchers.Default).collect {
+                if (it is TownListResult){
+                    townList.addAll(it.townList)
+                    loading = false
+                }
+            }
+        }
+    }
+
+    if (townList.isEmpty()) {
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+
+
+    } else {
+        TownManager(allTowns = townList)
+    }
+
+
+
+}
+
 
 @Composable
 fun TownDisplayer(towns: List<Town>, circuit: List<Town>) {
@@ -129,18 +188,7 @@ fun TownDisplayer(towns: List<Town>, circuit: List<Town>) {
 
 }
 
-fun List<Town>.circuitDistance() : Double {
-    return this.mapIndexed { index, town ->
-        val nextIndex = if (index + 1 >= this.size) 0 else (index+1)
-        val nextTown = this.get(nextIndex)
-        haversine(
-            town.latitude.toDouble(),
-            town.longitude.toDouble(),
-            nextTown.latitude.toDouble(),
-            nextTown.longitude.toDouble()
-        )
-    }.sum()
-}
+
 
 
 @Composable
@@ -167,7 +215,12 @@ fun TownManager(allTowns: List<Town>) {
         TextButton(
             onClick = {
                 if (circuit.size == 0) {
-                    circuit.addAll(townList.shuffled())
+                    circuit.addAll(computeWithSimulatedAnnealing(
+                        townList,
+                        100_000,
+                        SimulatedAnnealingParams(temperatureDecreaseRatio = 0.9)
+                    )
+                    )
                 }
             },
             modifier= Modifier.
@@ -183,8 +236,28 @@ fun TownManager(allTowns: List<Town>) {
 
     LaunchedEffect(townNumber) {
         townList.clear()
-        circuit.clear();
+        circuit.clear()
         townList.addAll(allTowns.shuffled().subList(0, townNumber).toList())
+    }
+}
+
+
+@Composable
+fun LongDisplayer() {
+    var running by remember { mutableStateOf(false) } // set to true to start the flow
+    var number by remember { mutableStateOf(-1L) }
+    LaunchedEffect(running) {
+        if (running)
+            getLongFlow().flowOn(Dispatchers.Default).collect{number = it}
+    }
+    Column(Modifier.fillMaxWidth()) {
+        Text("$number")
+        Button(onClick = { running = true }, enabled=!running) {
+            Text("Start")
+        }
+        Button(onClick = { running = false }, enabled=running) {
+            Text("Stop")
+        }
     }
 }
 
