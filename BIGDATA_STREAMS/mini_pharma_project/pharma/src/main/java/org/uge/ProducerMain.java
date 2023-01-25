@@ -12,8 +12,8 @@ public class ProducerMain {
     public static void main(String[] args) throws SQLException, ExecutionException, IOException, InterruptedException, URISyntaxException {
         var kafkaRepository = new KafkaRepository();
         var producer = new MultiAvroProducer();
-        kafkaRepository.sendMessage(producer);
-        kafkaRepository.sendMessage(producer);
-        kafkaRepository.sendMessage(producer);
+        for (int i = 0; i < 1000; i++) {
+            kafkaRepository.sendMessage(producer);
+        }
     }
 }

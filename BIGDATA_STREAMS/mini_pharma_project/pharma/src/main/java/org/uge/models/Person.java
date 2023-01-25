@@ -3,7 +3,6 @@ package org.uge.models;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 public record Person(String firstName, String lastName, Long cip, Double price, Long idPharma) {
 

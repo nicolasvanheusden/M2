@@ -13,10 +13,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.uge.models.Person;
 import org.uge.utils.Consummer;
 import org.uge.utils.Producer;
-import org.uge.utils.avro.AvroConsumer;
-import org.uge.utils.avro.AvroProducer;
-import org.uge.utils.avro.MultiAvroConsumer;
-import org.uge.utils.avro.MultiAvroProducer;
+import org.uge.utils.avro.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -122,6 +119,11 @@ public class KafkaRepository {
     public void listen(MultiAvroConsumer consumer) throws URISyntaxException, IOException {
         consumer.subscribe();
     }
+
+    public void listen(MultiAvroConsumerProducer consumer) throws URISyntaxException, IOException, ExecutionException, InterruptedException {
+        consumer.subscribe();
+    }
+
 
 
 
