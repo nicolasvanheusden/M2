@@ -1,6 +1,5 @@
 package org.uge.utils.avro;
 
-import com.fasterxml.jackson.databind.deser.std.NumberDeserializers;
 import com.twitter.bijection.Injection;
 import com.twitter.bijection.avro.GenericAvroCodecs;
 import org.apache.avro.Schema;
@@ -9,7 +8,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.TopicPartition;
 import org.uge.models.Person;
 
 import java.io.IOException;
@@ -18,13 +17,14 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class AvroConsumer {
+public class MultiAvroConsumer {
     private final KafkaConsumer<String, byte[]> consumer;
 
-    public AvroConsumer() {
+    public MultiAvroConsumer() {
 
-        String bootstrapServers = "127.0.0.1:9092";
+        String bootstrapServers = "127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094";
         String groupId = "groupAvro";
+        var topic = "topic3Rep";
 
         var properties = new Properties();
         // create consumer configs
@@ -34,7 +34,21 @@ public class AvroConsumer {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Arrays.asList("avroTopic"));
+
+        var partition1 = new TopicPartition(topic, 0);
+        var partition2 = new TopicPartition(topic, 1);
+        var partition3 = new TopicPartition(topic, 2);
+
+        consumer.assign(Arrays.asList(
+            partition1,
+            partition2,
+            partition3
+        ));
+        consumer.seek(partition1, 0L);
+        consumer.seek(partition2, 0L);
+        consumer.seek(partition3, 0L);
+
+        //consumer.subscribe(Arrays.asList(topic));
     }
 
     public void subscribe() throws URISyntaxException, IOException {
@@ -65,5 +79,7 @@ public class AvroConsumer {
         } finally {
             consumer.close();
         }
+
+
     }
 }

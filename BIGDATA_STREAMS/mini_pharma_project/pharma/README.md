@@ -13,6 +13,7 @@
 
 # topics
 `kafka-topics --create --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --replication-factor 3 --partitions 1 --create --topic topic3Rep`
+./kafka-topics.sh --create --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --replication-factor 3 --partitions 3 --create --topic topic3Rep
 
 
 # producer (écrire les messages)

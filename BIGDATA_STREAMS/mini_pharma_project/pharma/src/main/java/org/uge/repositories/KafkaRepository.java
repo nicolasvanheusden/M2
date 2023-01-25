@@ -15,6 +15,8 @@ import org.uge.utils.Consummer;
 import org.uge.utils.Producer;
 import org.uge.utils.avro.AvroConsumer;
 import org.uge.utils.avro.AvroProducer;
+import org.uge.utils.avro.MultiAvroConsumer;
+import org.uge.utils.avro.MultiAvroProducer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -79,6 +81,35 @@ public class KafkaRepository {
         producer.send("avroTopic", bytes);
     }
 
+    public void sendMessage(MultiAvroProducer producer) throws SQLException, ExecutionException, InterruptedException, URISyntaxException, IOException {
+        var user = new Faker();
+        var drug = drugRepositoryPSQL.getRandom();
+        var pharma = pharmaRepositoryPSQL.getRandom();
+
+        var person = new Person(
+            user.name().firstName(),
+            user.name().lastName(),
+            drug.cip(),
+            drug.price(),
+            pharma.id()
+        );
+
+        Schema.Parser parser = new Schema.Parser();
+        Schema schema = parser.parse(Person.openSchema());
+        Injection<GenericRecord, byte[]> recordInjection = GenericAvroCodecs.toBinary(schema);
+
+        GenericData.Record avroRecord = new GenericData.Record(schema);
+        avroRecord.put("firstName", person.firstName());
+        avroRecord.put("lastName", person.lastName());
+        avroRecord.put("cip", person.cip());
+        avroRecord.put("price", person.price());
+        avroRecord.put("idPharma", person.idPharma());
+
+        byte[] bytes = recordInjection.apply(avroRecord);
+
+        producer.send("topic3Rep", bytes);
+    }
+
 
 
 
@@ -87,6 +118,9 @@ public class KafkaRepository {
     }
     public void listen(AvroConsumer consummer) throws URISyntaxException, IOException {
         consummer.subscribe();
+    }
+    public void listen(MultiAvroConsumer consumer) throws URISyntaxException, IOException {
+        consumer.subscribe();
     }
 
 
