@@ -16,6 +16,8 @@ import org.uge.utils.Producer;
 import org.uge.utils.avro.AvroConsumer;
 import org.uge.utils.avro.AvroProducer;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
@@ -46,28 +48,31 @@ public class KafkaRepository {
         )));
     }
 
-    private static final String USER_SCHEMA = "{"
-        + "\"type\":\"record\","
-        + "\"name\":\"myrecord\","
-        + "\"fields\":["
-        + "  { \"name\":\"str1\", \"type\":\"string\" },"
-        + "  { \"name\":\"str2\", \"type\":\"string\" },"
-        + "  { \"name\":\"int1\", \"type\":\"int\" }"
-        + "]}";
 
-    public void sendMessage(AvroProducer producer) throws SQLException, ExecutionException, InterruptedException {
+
+    public void sendMessage(AvroProducer producer) throws SQLException, ExecutionException, InterruptedException, URISyntaxException, IOException {
         var user = new Faker();
         var drug = drugRepositoryPSQL.getRandom();
         var pharma = pharmaRepositoryPSQL.getRandom();
 
+        var person = new Person(
+            user.name().firstName(),
+            user.name().lastName(),
+            drug.cip(),
+            drug.price(),
+            pharma.id()
+        );
+
         Schema.Parser parser = new Schema.Parser();
-        Schema schema = parser.parse(USER_SCHEMA);
+        Schema schema = parser.parse(Person.openSchema());
         Injection<GenericRecord, byte[]> recordInjection = GenericAvroCodecs.toBinary(schema);
 
         GenericData.Record avroRecord = new GenericData.Record(schema);
-        avroRecord.put("str1", "Str 1-" + 0);
-        avroRecord.put("str2", "Str 2-" + 0);
-        avroRecord.put("int1", 0);
+        avroRecord.put("firstName", person.firstName());
+        avroRecord.put("lastName", person.lastName());
+        avroRecord.put("cip", person.cip());
+        avroRecord.put("price", person.price());
+        avroRecord.put("idPharma", person.idPharma());
 
         byte[] bytes = recordInjection.apply(avroRecord);
 
@@ -80,7 +85,7 @@ public class KafkaRepository {
     public void listen(Consummer consummer) {
         consummer.subscribe();
     }
-    public void listen(AvroConsumer consummer) {
+    public void listen(AvroConsumer consummer) throws URISyntaxException, IOException {
         consummer.subscribe();
     }
 

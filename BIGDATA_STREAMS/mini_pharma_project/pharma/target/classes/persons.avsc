@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "Person",
+  "namespace": "org.uge",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
+      "type": "string"
+    },
+    {
+      "name": "cip",
+      "type": "long"
+    },
+    {
+      "name": "price",
+      "type": "double"
+    },
+    {
+      "name": "idPharma",
+      "type": "long"
+    }
+  ]
+}
