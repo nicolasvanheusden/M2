@@ -1,10 +1,6 @@
 package org.uge;
 
-
 import org.uge.repositories.KafkaRepository;
-import org.uge.utils.Consummer;
-import org.uge.utils.avro.AvroConsumer;
-import org.uge.utils.avro.MultiAvroConsumer;
 import org.uge.utils.avro.MultiAvroConsumerProducer;
 
 import java.io.IOException;

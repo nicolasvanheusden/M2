@@ -3,6 +3,7 @@ package org.uge;
 
 import org.uge.utils.avro.ConsumerLoop;
 import org.uge.utils.avro.DataAnalyzing;
+import org.uge.utils.stream.SimpleProcessor;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;

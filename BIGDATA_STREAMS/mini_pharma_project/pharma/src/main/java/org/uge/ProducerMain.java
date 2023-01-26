@@ -1,6 +1,7 @@
 package org.uge;
 
 import org.uge.repositories.KafkaRepository;
+import org.uge.utils.Producer;
 import org.uge.utils.avro.MultiAvroProducer;
 
 import java.io.IOException;
