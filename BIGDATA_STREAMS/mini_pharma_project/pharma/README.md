@@ -1,3 +1,21 @@
+Rapport Nicolas van Heusden 208938
+
+Toutes les questions, hormis la 7 ont été implantées.
+
+Question 1 : Consummer.java et Producer.java
+Question 2 : AvroConsumer.java et AvroPoducer.java
+Question 3.* : MultiAvroProducer.java et MultiAvroConsumer.java
+
+Question 5 : AnonymProcessor.java
+Question 6 : AnonymKStreams.java
+
+
+Le seul problème rencontré a été une mauvaise configuration de Kafka car je l'avais installé via homebrew.
+
+
+## Annexe
+Exo 1 commande utilisée.
+
 # zookeper
 `zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties`
 

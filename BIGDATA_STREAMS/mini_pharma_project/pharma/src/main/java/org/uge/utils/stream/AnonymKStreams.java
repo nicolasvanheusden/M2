@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
-public class SimpleKStreams {
+public class AnonymKStreams {
     private static final String INPUT_TOPIC = Constants.TOPIC_ANONYM;
     private static final String OUTPUT_TOPIC = Constants.TOPIC_DRUGS_ANONYM_SALES_AVRO;
 
@@ -37,8 +37,6 @@ public class SimpleKStreams {
         Schema schema = parser.parse(Person.openSchema());
         Injection<GenericRecord, byte[]> recordInjection = GenericAvroCodecs.toBinary(schema);
 
-
-
         KStream<Void, String> upperCasedStream = simpleStream
             .mapValues(v -> {
             var record = recordInjection.invert(v).get();
@@ -53,8 +51,9 @@ public class SimpleKStreams {
             .mapValues(Person::toString);
 
 
-        upperCasedStream.to( , Produced.with(stringSerde, stringSerde));
-        upperCasedStream.print(Printed.<String, String>toSysOut().withLabel("Upper case"));
+        upperCasedStream.to(OUTPUT_TOPIC, Produced.with(Serdes.Void(), stringSerde));
+        upperCasedStream.print(Printed.<Void, String>toSysOut().withLabel("Anonym drug sold > 4€"));
+
         KafkaStreams kafkaStreams = new KafkaStreams(builder.build(),streamsConfig);
         kafkaStreams.start();
         Thread.sleep(35000);

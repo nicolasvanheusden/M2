@@ -4,20 +4,16 @@ import com.twitter.bijection.Injection;
 import com.twitter.bijection.avro.GenericAvroCodecs;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.uge.models.Person;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -58,16 +54,6 @@ public class ConsumerLoop implements Runnable {
                 ConsumerRecords<String, byte[]> records = consumer.poll(oneSecond);
                 for (ConsumerRecord<String, byte[]> record : records) {
                     GenericRecord genericRecord = recordInjection.invert(record.value()).get();
-                    /*System.out.println("Key: " + record.key() + ", Value: " + record.value());
-                    System.out.println("Partition: " + record.partition() + ", Offset:" + record.offset());
-                    System.out.println(
-                        "{" +
-                            "firstname: "+ genericRecord.get("firstName") + ", " +
-                            "lastname: " + genericRecord.get("lastName") + ", " +
-                            "cip: " + genericRecord.get("cip") + ", " +
-                            "price: " + genericRecord.get("price") + ", " +
-                            "idPharma: " + genericRecord.get("idPharma")
-                    );*/
                     analyzing.addDrug(genericRecord.get("cip").toString());
                     analyzing.printDrugSold();
                 }

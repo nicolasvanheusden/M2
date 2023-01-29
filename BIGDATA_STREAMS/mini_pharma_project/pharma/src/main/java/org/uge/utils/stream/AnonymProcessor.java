@@ -8,11 +8,11 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.streams.processor.api.Processor;
 import org.apache.kafka.streams.processor.api.Record;
 import org.uge.models.Person;
+import org.uge.utils.Constants;
 import org.uge.utils.avro.AvroProducer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class AnonymProcessor implements Processor<Void, byte[], Void, byte[]> {
@@ -96,6 +96,6 @@ public class AnonymProcessor implements Processor<Void, byte[], Void, byte[]> {
         byte[] bytes = recordInjection.apply(avroRecord);
 
 
-        producer.send("anonymTopic", bytes);
+        producer.send(Constants.TOPIC_ANONYM, bytes);
     }
 }
